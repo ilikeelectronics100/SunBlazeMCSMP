@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sun Blaze Gaming Server</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#08111f;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* 🎥 BACKGROUND VIDEO */
+.video-bg{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-2;
+    opacity:.15;
+}
+
+/* fallback glow */
+.bg{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+}
+
+.glow{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(150px);
+    opacity:.35;
+    animation:float 10s ease-in-out infinite;
+}
+
+.red{width:450px;height:450px;background:#ff3b30;top:-100px;left:-100px;}
+.blue{width:500px;height:500px;background:#2563eb;right:-150px;top:150px;}
+.yellow{width:450px;height:450px;background:#facc15;bottom:-150px;left:40%;}
+
+@keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-40px);}
+}
+
+/* HERO */
+.hero{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+}
+
+.hero-content{
+    max-width:900px;
+    opacity:0;
+    transform:translateY(40px);
+    transition:1s ease;
+}
+
+.hero-content.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.badge{
+    display:inline-block;
+    padding:10px 20px;
+    border-radius:999px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.15);
+    margin-bottom:20px;
+    animation:pulse 3s infinite;
+}
+
+@keyframes pulse{
+    50%{transform:scale(1.05);}
+}
+
+h1{
+    font-size:clamp(3rem,10vw,6rem);
+    font-weight:800;
+    line-height:1;
+    margin-bottom:20px;
+}
+
+.gradient{
+    background:linear-gradient(90deg,#facc15,#2563eb,#ff3b30);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.subtitle{
+    font-size:1.2rem;
+    color:#cbd5e1;
+    margin-bottom:35px;
+}
+
+/* IP */
+.ip-box{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:15px;
+}
+
+.ip{
+    padding:16px 25px;
+    border-radius:15px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.15);
+    font-weight:600;
+}
+
+button{
+    border:none;
+    cursor:pointer;
+    padding:16px 28px;
+    border-radius:15px;
+    font-weight:700;
+    background:linear-gradient(90deg,#facc15,#2563eb,#ff3b30);
+    color:white;
+}
+
+/* SECTIONS */
+.container{
+    width:min(1200px,90%);
+    margin:auto;
+}
+
+section{
+    padding:80px 0;
+    opacity:0;
+    transform:translateY(40px);
+    transition:1s ease;
+}
+
+section.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.section-title{
+    text-align:center;
+    font-size:2.8rem;
+    margin-bottom:50px;
+}
+
+/* CARDS */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:rgba(255,255,255,.05);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:25px;
+    padding:30px;
+    transition:.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px) scale(1.02);
+    border-color:#facc15;
+}
+
+/* WHITELIST */
+.whitelist{
+    text-align:center;
+    border:2px solid #facc15;
+    background:rgba(250,204,21,.08);
+    border-radius:25px;
+    padding:30px;
+}
+
+/* DISCORD */
+.discord{
+    margin-top:20px;
+    display:inline-block;
+    padding:14px 24px;
+    border-radius:15px;
+    background:#5865F2;
+    color:white;
+    text-decoration:none;
+    font-weight:700;
+}
+
+/* PLAYER COUNT */
+.players{
+    text-align:center;
+    font-size:1.3rem;
+    margin-top:15px;
+    color:#facc15;
+}
+
+/* DISCORD EMBED */
+.discord-box{
+    margin-top:30px;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    padding:40px;
+    color:#94a3b8;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎥 VIDEO BACKGROUND (optional) -->
+<video class="video-bg" autoplay muted loop>
+<source src="https://cdn.coverr.co/videos/coverr-minecraft-sunset-7423/1080p.mp4" type="video/mp4">
+</video>
+
+<div class="bg">
+    <div class="glow red"></div>
+    <div class="glow blue"></div>
+    <div class="glow yellow"></div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+<div class="hero-content">
+
+<div class="badge">Minecraft Survival Server</div>
+
+<h1><span class="gradient">SUN BLAZE</span><br>GAMING SERVER</h1>
+
+<p class="subtitle">Community Survival • Java & Bedrock • Shops • PvP</p>
+
+<div class="ip-box">
+<div class="ip">104.51.182.10:25565</div>
+<button onclick="copyIP()">Copy IP</button>
+</div>
+
+<div class="players" id="players">
+Loading player count...
+</div>
+
+</div>
+</section>
+
+<!-- WHITELIST -->
+<section>
+<div class="container">
+
+<div class="whitelist">
+
+<h2 style="color:#facc15;margin-bottom:10px;">⚠ Whitelist Required</h2>
+
+<p>Join Discord and post your Minecraft username. Staff will approve you before joining.</p>
+
+<a class="discord" href="https://discord.gg/arG26NAJ42" target="_blank">
+Join Discord
+</a>
+
+<div class="discord-box">
+<iframe src="https://discord.com/widget?id=0&theme=dark"
+width="100%" height="300" allowtransparency="true"></iframe>
+</div>
+
+</div>
+
+</div>
+</section>
+
+<!-- HOW TO JOIN -->
+<section>
+<div class="container">
+
+<h2 class="section-title">How To Join</h2>
+
+<div class="grid">
+
+<div class="card">Open Minecraft</div>
+<div class="card">Add Server</div>
+<div class="card">Enter IP</div>
+<div class="card">Join Discord</div>
+<div class="card">Whitelist Request</div>
+<div class="card">Play</div>
+
+</div>
+
+</div>
+</section>
+
+<!-- RULES -->
+<section>
+<div class="container">
+
+<h2 class="section-title">Server Rules</h2>
+
+<div class="grid">
+
+<div class="card">No Griefing</div>
+<div class="card">No Cheating</div>
+<div class="card">Respect Players</div>
+<div class="card">No Spawn Killing</div>
+<div class="card">Whitelist Required</div>
+<div class="card">Have Fun</div>
+
+</div>
+
+</div>
+</section>
+
+<footer>© 2026 Sun Blaze Gaming Server</footer>
+
+<script>
+// 🎮 COPY IP
+function copyIP(){
+navigator.clipboard.writeText("104.51.182.10:25565");
+}
+
+// 🟢 PLAYER COUNT (MINECRAFT API)
+async function loadPlayers(){
+try{
+let res = await fetch("https://api.mcsrvstat.us/2/104.51.182.10");
+let data = await res.json();
+document.getElementById("players").innerText =
+"Players Online: " + (data.players.online || 0);
+}catch{
+document.getElementById("players").innerText =
+"Players Online: ?";
+}
+}
+loadPlayers();
+
+// ✨ SCROLL ANIMATIONS
+const observer = new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("show");
+}
+});
+});
+
+document.querySelectorAll("section,.hero-content")
+.forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>
